@@ -1,0 +1,12 @@
+#!/bin/zsh
+# Usage: ./aula off | on | read | mode <n>   (on = restore saved original config)
+cd "$(dirname "$0")"
+export DYLD_LIBRARY_PATH=/opt/homebrew/lib
+r(){ uv run --with hid python -I aula_wired.py "$@"; }
+case "$1" in
+  off) r mode 0;;
+  on) r restore config-wired-original.txt;;
+  read) r read;;
+  mode) r mode "$2";;
+  *) echo "usage: $0 off|on|read|mode <n>";;
+esac
